@@ -20,70 +20,79 @@ Para el cambio de membresía, debe utilizar un identificador numérico para iden
 3: Sin Conexión
 4: Pro
 
-NOTA: Puedes utilizar el método “_crear_nueva_membresia” (dentro de la(s)
-clase(s) que estimes adecuado) que se encuentra en el archivo
-apoyo_desafio.py. Este método tiene un nivel de acceso de tipo “protected”
-(dado por el underscore “_” al principio del nombre). Un método de tipo “protected”
-solo puede ser accedido por la misma clase donde se define, y por
- todas las clases que le hereden.
+## Clases Principales
 
-En cuanto al detalle de los tipos de membresía, debes tener en cuenta las siguientes
-consideraciones para el desarrollo solicitado:
-● No puede existir una “Membresía” como tal, sino que siempre debe ser de algún tipo
-específico, que se detalla en los siguientes puntos.
-● Todas las membresías de tipo “Gratis” tienen un costo de $0, y una cantidad máxima
-de 1 dispositivo. Comportamiento:
-○ Si alguien con este tipo de membresía desea cambiar su suscripción, debe
-validar que la nueva membresía solicitada sea un número entre 1 y 4 inclusive,
-y luego generar la nueva membresía. En caso contrario, debe retornar la
-membresía actual.
-● Todas las membresías de tipo “Básica” tienen un costo de $3000, y una cantidad
-máxima de 2 dispositivos. Comportamiento:
-○ Si alguien con este tipo de membresía desea cambiar su suscripción, debe
-validar que la nueva membresía solicitada sea un número entre 2 y 4 inclusive,
-y luego generar la nueva membresía. En caso contrario, debe retornar la
-membresía actual.
-● Todas las membresías de tipo “Familiar” tienen un costo de $5000, y una cantidad
-máxima de 5 dispositivos. Al momento de crear una membresía Familiar, se debe
-asignar 7 a un atributo de instancia que almacene los días de regalo. Comportamiento:
-○ Si alguien con este tipo de membresía desea cambiar su suscripción, debe
-validar que la nueva membresía solicitada sea un 1, 3 ó 4, y luego generar la
-nueva membresía. En caso contrario, debe retornar la membresía actual.
-○ Debe permitir modificar el control parental. La lógica de este comportamiento
-aún no se ha definido, pero debe declararlo (sin implementación).
-● Todas las membresías de tipo “Sin Conexión” tienen un costo de $3500, y una cantidad
-máxima de 2 dispositivos. Al momento de crear una membresía Sin Conexión, se debe
-asignar 7 a un atributo de instancia que almacene los días de regalo. Comportamiento:
-○ Si alguien con este tipo de membresía desea cambiar su suscripción, debe
-validar que la nueva membresía solicitada sea un 1, 2 ó 4 , y luego generar la
-nueva membresía. En caso contrario, debe retornar la membresía actual.
-○ Debe permitir incrementar la cantidad máxima de contenido disponible para
-ver sin conexión. La lógica de este comportamiento aún no se ha definido, pero
-debe declararlo (sin implementación).
-● Todas las membresías de tipo “Pro” tienen un costo de $7000, y una cantidad máxima
-de 6 dispositivos. Al momento de crear una membresía Pro, se debe asignar 15 a un
-atributo de instancia que almacene los días de regalo. Comportamiento:
+### `Membresia`
 
-○ Si alguien con este tipo de membresía desea cambiar su suscripción, debe
-validar que la nueva membresía solicitada sea un número entre 1 y 3 inclusive,
-y luego generar la nueva membresía. En caso contrario, debe retornar la
-membresía actual.
-○ Debe permitir modificar el control parental (igual a membresía Familiar)
-○ Debe permitir incrementar la cantidad máxima de contenido disponible para
-ver sin conexión (Igual a membresía Sin Conexión).
-● Las membresías de tipo “Básica”, “Familiar”, “Sin Conexión” y “Familiar” deben tener
-además el siguiente comportamiento:
-○ Deben permitir cancelar la suscripción. Al realizar esta acción, se debe generar
-una membresía de tipo Gratis con el mismo correo y número de tarjeta de la
-membresía original.
+- Clase abstracta que representa una membresía de suscripción.
+- Métodos:
+  - `__init__(correo_suscriptor: str, numero_tarjeta: str)`: Constructor para iniciar los atributos de la instancia de clase.
+  - `correo_suscriptor`: Propiedad para acceder al correo del suscriptor.
+  - `numero_tarjeta`: Propiedad para acceder al número de tarjeta del suscriptor.
+  - `cambiar_suscripcion(nueva_membresia: int)`: Método abstracto para cambiar la suscripción de la membresía.
+  - `_crear_nueva_membresia(nueva_membresia: int)`: Método privado para crear una nueva membresía.
 
+### `Membresia_Gratis`
 
-● Para resolver este desafío con menos líneas de código, puede aplicar herencia híbrida,
-donde:
-○ Dos de las clases son padre de más de una clase (herencia jerárquica).
-○ Tres de las clases son hija y padre a la vez (herencia multinivel).
-○ Una de las clases hereda de más de una clase (herencia múltiple).
-● Considerando lo anterior, el ordenamiento de las clases puede ser el siguiente:
+- Clase que representa una membresía gratuita.
+- Atributos:
+  - `costo = 0`
+  - `cantidad_dispositivos = 1`
+- Métodos:
+  - `cambiar_suscripcion(nueva_membresia: int)`: Cambia la suscripción a una nueva membresía.
+
+### `Basica`
+
+- Clase que representa una membresía básica.
+- Atributos:
+  - `costo = 3000`
+  - `cantidad_dispositivos = 2`
+- Métodos:
+  - `__init__(correo_suscriptor: str, numero_tarjeta: str)`: Constructor para iniciar los atributos de la instancia de clase.
+  - `cancelar_suscripcion()`: Cancela la suscripción y devuelve una membresía gratuita.
+  - `cambiar_suscripcion(nueva_membresia: int)`: Cambia la suscripción a una nueva membresía.
+
+### `Familiar`
+
+- Clase que representa una membresía familiar.
+- Atributos:
+  - `costo = 5000`
+  - `cantidad_dispositivos = 5`
+- Métodos:
+  - `cambiar_suscripcion(nueva_membresia: int)`: Cambia la suscripción a una nueva membresía.
+  - `modificar_control_parental()`: Método para modificar el control parental.
+
+### `SinConexion`
+
+- Clase que representa una membresía sin conexión.
+- Atributos:
+  - `costo = 3500`
+- Métodos:
+  - `cambiar_suscripcion(nueva_membresia: int)`: Cambia la suscripción a una nueva membresía.
+  - `incrementar_cantidad_maxima_offline()`: Método para incrementar la cantidad máxima de dispositivos offline.
+
+### `Pro`
+
+- Clase que representa una membresía Pro.
+- Atributos:
+  - `costo = 7000`
+  - `cantidad_dispositivos = 6`
+- Métodos:
+  - `cambiar_suscripcion(nueva_membresia: int)`: Cambia la suscripción a una nueva membresía.
+
+## Uso
+
+Se puede crear una membresía gratuita y luego cambiarla a diferentes tipos de membresías, según las necesidades del usuario.
+
+Ejemplo:
+
+```python
+membresia_gratuita = Membresia_Gratis("correo@prueba.cl", "123 456 789")
+membresia_basica = membresia_gratuita.cambiar_suscripcion(1)
+membresia_familiar = membresia_basica.cambiar_suscripcion(2)
+membresia_sin_conexion = membresia_familiar.cambiar_suscripcion(3)
+membresia_pro = membresia_sin_conexion.cambiar_suscripcion(4)
+membresia_gratuita_cancelada = membresia_pro.cancelar_suscripcion()
 
 ## Empezando 🚀
 
