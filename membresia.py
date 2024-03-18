@@ -49,7 +49,7 @@ class Membresia(ABC): # Esta marcada como abstracta ya que hereda la clase ABC d
             return Pro(self.correo_suscriptor, self.numero_tarjeta)
 
 # Definición de la clase de membresía Gratis
-class Gratis(Membresia): # hereda todas las propiedades y métodos de la clase Membresia.
+class Membresia_Gratis(Membresia): # hereda todas las propiedades y métodos de la clase Membresia.
     costo = 0
     cantidad_dispositivos = 1
 
@@ -85,7 +85,7 @@ class Basica(Membresia): #Hereda la clase Membresia propiedades y metodos y agre
         Returns:
             Gratis: Objeto de membresía gratuita.
         """
-        return Gratis(self.correo_suscriptor, self.numero_tarjeta)
+        return Membresia_Gratis(self.correo_suscriptor, self.numero_tarjeta)
     #Metodo para cambiar membresia
     def cambiar_suscripcion(self, nueva_membresia: int):
         """Método para cambiar la suscripción de la membresía básica.
@@ -164,15 +164,15 @@ class Pro(Familiar, SinConexion):
             return self._crear_nueva_membresia(nueva_membresia)
 
 # Creación de una membresía gratuita y prueba de cambio de membresía
-g = Gratis("correo@prueba.cl", "123 456 789")
-print(type(g))
-b = g.cambiar_suscripcion(1)
-print(type(b))
-f = b.cambiar_suscripcion(2)
-print(type(f))
-sc = f.cambiar_suscripcion(3)
-print(type(sc))
-pro = sc.cambiar_suscripcion(4)
-print(type(pro))
-g2 = pro.cancelar_suscripcion()
-print(type(g2))
+membresia_gratuita = Membresia_Gratis("correo@prueba.cl", "123 456 789")
+print(type(membresia_gratuita))
+membresia_basica = membresia_gratuita.cambiar_suscripcion(1)
+print(type(membresia_basica))
+membresia_familiar = membresia_basica.cambiar_suscripcion(2)
+print(type(membresia_familiar))
+membresia_sin_conexion = membresia_familiar.cambiar_suscripcion(3)
+print(type(membresia_sin_conexion))
+membresia_pro = membresia_sin_conexion.cambiar_suscripcion(4)
+print(type(membresia_pro))
+membresia_gratuita_cancelada = membresia_pro.cancelar_suscripcion()
+print(type(membresia_gratuita_cancelada))
